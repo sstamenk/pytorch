@@ -426,7 +426,9 @@ _scaled_grouped_mm_cuda(
         std::optional<c10::ScalarType> out_dtype,
         bool use_fast_accum) {
   bool allowed_device = _scaled_mm_allowed_device(/*sm90_only*/true, /*sm100_only*/true);
-  TORCH_CHECK_VALUE(allowed_device, "torch._scaled_grouped_mm is only supported on CUDA devices with compute capability = [9.0, 10.0], or ROCm MI300+");
+  TORCH_CHECK_VALUE(
+      allowed_device,
+      "torch._scaled_grouped_mm is only supported on CUDA devices with compute capability = [9.0, 10.0], or ROCm gfx942, gfx950, gfx1200, or gfx1201");
 
   TORCH_CHECK_VALUE(!check_valid_strides_and_return_transposed(mat_a), "Expected mat1 to not be transposed");
   TORCH_CHECK_VALUE(check_valid_strides_and_return_transposed(mat_b), "Expected mat2 to be transposed");
@@ -542,7 +544,9 @@ _scaled_grouped_mm_cuda_v2(
           IntArrayRef contraction_dim,
           bool use_fast_accum) {
   bool allowed_device = _scaled_mm_allowed_device(/*sm90_only*/true, /*sm100_only*/true);
-  TORCH_CHECK_VALUE(allowed_device, "torch._scaled_grouped_mm is only supported on CUDA devices with compute capability = [9.0, 10.0], or ROCm MI300+");
+  TORCH_CHECK_VALUE(
+      allowed_device,
+      "torch._scaled_grouped_mm is only supported on CUDA devices with compute capability = [9.0, 10.0], or ROCm gfx942, gfx950, gfx1200, or gfx1201");
 
   TORCH_CHECK_VALUE(!check_valid_strides_and_return_transposed(mat_a), "Expected mat1 to not be transposed");
   TORCH_CHECK_VALUE(check_valid_strides_and_return_transposed(mat_b), "Expected mat2 to be transposed");

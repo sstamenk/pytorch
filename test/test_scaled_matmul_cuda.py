@@ -1101,7 +1101,11 @@ class TestFP8Matmul(TestCase):
         scale_b = torch.tensor(1.0, device=device)
         self.assertRaisesRegex(
             RuntimeError,
-            r"torch\.\_scaled\_mm is only supported on CUDA devices with compute capability \>\= 9\.0 or 8\.9, or ROCm MI300\+",
+            (
+                r"torch\.\_scaled\_mm is only supported on CUDA devices with "
+                r"compute capability \>\= 9\.0 or 8\.9, or ROCm gfx942, gfx950, "
+                r"gfx1200, or gfx1201"
+            ),
             lambda: scaled_mm_wrap(x, y, scale_a, scale_b, out_dtype=torch.float32),
         )
 

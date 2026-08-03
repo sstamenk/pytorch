@@ -472,7 +472,9 @@ _scaled_mm_out_cuda(const Tensor& mat1, const Tensor& mat2,
           Tensor& out) {
   // Check sizes
   bool allowed_device = _scaled_mm_allowed_device();
-  TORCH_CHECK(allowed_device, "torch._scaled_mm is only supported on CUDA devices with compute capability >= 9.0 or 8.9, or ROCm MI300+");
+  TORCH_CHECK(
+      allowed_device,
+      "torch._scaled_mm is only supported on CUDA devices with compute capability >= 9.0 or 8.9, or ROCm gfx942, gfx950, gfx1200, or gfx1201");
   TORCH_CHECK(mat1.dim() == 2, "mat1 must be a matrix");
   TORCH_CHECK(mat2.dim() == 2, "mat2 must be a matrix");
   TORCH_CHECK(
@@ -1297,8 +1299,9 @@ _scaled_mm_cuda_v2_out(
           Tensor& out) {
   // Check sizes
   bool allowed_device = _scaled_mm_allowed_device();
-  TORCH_CHECK_NOT_IMPLEMENTED(allowed_device,
-      "torch._scaled_mm is only supported on CUDA devices with compute capability >= 9.0 or 8.9, or ROCm MI300+");
+  TORCH_CHECK_NOT_IMPLEMENTED(
+      allowed_device,
+      "torch._scaled_mm is only supported on CUDA devices with compute capability >= 9.0 or 8.9, or ROCm gfx942, gfx950, gfx1200, or gfx1201");
   TORCH_CHECK_VALUE(mat_a.dim() == 2, "mat_a must be a matrix");
   TORCH_CHECK_VALUE(mat_b.dim() == 2, "mat_b must be a matrix");
 
